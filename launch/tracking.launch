@@ -1,0 +1,13 @@
+<launch>
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find platooning_tracking_gazebo)/worlds/tracking.world"/>
+    <!-- more default parameters can be changed here -->
+  </include>
+
+  <!-- insert model -->
+  <param name="robot_model" textfile="$(find platooning_tracking_gazebo)/models/LV/model.sdf"/>
+  <node name="spawn_robot1" pkg="gazebo_ros" type="spawn_model" args="-gazebo -param robot_model -model myrobot" respawn="false" output="screen" />
+
+
+</launch>
