@@ -5,9 +5,13 @@
     <!-- more default parameters can be changed here -->
   </include>
 
-  <!-- insert model -->
-  <param name="robot_model" textfile="$(find platooning_tracking_gazebo)/models/LV/model.sdf"/>
-  <node name="spawn_robot1" pkg="gazebo_ros" type="spawn_model" args="-gazebo -param robot_model -model myrobot" respawn="false" output="screen" />
+  <!-- insert model(sdf) -->
+  <!--param name="robot_model" textfile="$(find platooning_tracking_gazebo)/models/LV/model.sdf"/-->
+  <!--node name="spawn_robot1" pkg="gazebo_ros" type="spawn_model" args="-gazebo -param robot_model -model myrobot" respawn="false" output="screen" /-->
+
+
+  <!-- Spawn a robot into Gazebo(urdf) -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find platooning_tracking_gazebo)/models/LV/model.urdf -urdf -z 1 -model model" />
 
 
 </launch>
