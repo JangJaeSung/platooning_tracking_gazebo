@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find platooning_tracking_gazebo)/worlds/tracking.world"/>
+    <!-- more default parameters can be changed here -->
+  </include>
+
+  <!-- xacro -->
+  <!-- leader -->
+  <group ns="leading_vehicle">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/LV/model.xacro'" />
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -z 1 -model LV" />
+  </group>
+
+  <!-- follower -->
+  <group ns="following_vehicle">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/FV/f1.xacro'" />
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -y -1.8 -z 1 -model FV" />
+  </group>
+
+  <include file="$(find platooning_tracking_control)/launch/control.launch" />
+
+</launch>

@@ -2,50 +2,46 @@
 <robot name="LV" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:include filename="$(find platooning_tracking_gazebo)/models/LV/model.gazebo" />
+  <xacro:include filename="$(find platooning_tracking_gazebo)/models/LV/materials.xacro" />
 
-  <joint name="chassis" type="fixed">
-    <parent link="LV__link_0"/>
-    <child link="LV__link_1"/>
-    <origin rpy="0  0  0" xyz="0      -0.19568  0.03714"/>
-    <axis xyz="0  1  0"/>
-    <!--limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/-->
-    <limit effort="10.0" velocity="100.0"/>
-  </joint>
-
-  <!-- front  -->
+  <!-- Joint -->
+  <!-- front -->
   <joint name="front_left" type="continuous">
     <parent link="LV__link_0"/>
-    <child link="LV__link_2_clone_0_clone"/>
-    <origin rpy="0      1.5707  0" xyz="-0.11     0.39431 -0.03785"/>
-    <axis xyz="0   0   -1"/>
-	<limit effort="10.0" velocity="100.0"/>
+    <child link="LV__link_1_clone"/>
+    <origin rpy="0      1.5707  0" xyz="-0.06999  0.51724 -0.039"/>
+    <axis xyz="0 0 -1"/>
+    <dynamics damping="0.7"/>
+    <limit effort="100" velocity="100"/>
   </joint>
   <joint name="front_right" type="continuous">
     <parent link="LV__link_0"/>
-    <child link="LV__link_2_clone"/>
-    <origin rpy="0      1.5707  0" xyz="0.11     0.39431 -0.03785"/>
-	<axis xyz="0   0   -1"/>
-    <limit effort="10.0" velocity="100.0"/>
+    <child link="LV__link_1_clone_0"/>
+    <origin rpy="0      1.5707  0" xyz="0.06999  0.51441 -0.039"/>
+    <axis xyz="0 0 -1"/>
+    <dynamics damping="0.7"/>
+    <limit effort="100" velocity="100"/>
   </joint>
 
   <!-- rear -->
   <joint name="rear_left" type="continuous">
-    <parent link="LV__link_1"/>
-    <child link="LV__link_2_clone_0"/>
-    <origin rpy="0      1.5707  0" xyz="-0.11  -0.51  -0.075"/>
-    <axis xyz="0   0   1"/>
-    <limit effort="10.0" velocity="100.0"/>
+    <parent link="LV__link_0"/>
+    <child link="LV__link_1"/>
+    <origin rpy="0      1.5707  0" xyz="-0.06999 -0.53055 -0.039"/>
+    <axis xyz="0 0 -1"/>
+    <dynamics damping="0.7"/>
+    <limit effort="10" velocity="100"/>
   </joint>
   <joint name="rear_right" type="continuous">
-    <parent link="LV__link_1"/>
-    <child link="LV__link_2_clone_1"/>
-    <origin rpy="0      1.5707  0" xyz="0.11  -0.51  -0.075"/>
-    <axis xyz="0   0   1"/>
-    <limit effort="10.0" velocity="100.0"/>
+    <parent link="LV__link_0"/>
+    <child link="LV__link_1_clone_1"/>
+    <origin rpy="0      1.5707  0" xyz="0.06999 -0.53055 -0.039"/>
+    <axis xyz="0 0 -1"/>
+    <dynamics damping="0.7"/>
+    <limit effort="10" velocity="100"/>
   </joint>
 
-
-
+  <!-- Link -->
   <link name="LV__link_0">
     <inertial>
       <mass value="1"/>
@@ -53,15 +49,15 @@
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
     <collision name="LV__collision">
-      <origin rpy="0  0  0" xyz="0       0.40431  0.00714"/>
+      <origin rpy="0  0  0" xyz="0       0.02944  0.156"/>
       <geometry>
-        <box size="0.18 0.1 0.13"/>
+        <box size="0.18 1.2 0.35"/>
       </geometry>
     </collision>
     <visual name="LV__visual">
-      <origin rpy="0  0  0" xyz="0       0.40431  0.00714"/>
+      <origin rpy="0  0  0" xyz="0       0.02944  0.156"/>
       <geometry>
-        <box size="0.18 0.1 0.13"/>
+        <box size="0.18 1.2 0.35"/>
       </geometry>
     </visual>
   </link>
@@ -69,22 +65,22 @@
     <inertial>
       <mass value="1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>
-      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
     </inertial>
     <collision name="LV__collision">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
-        <box size="0.18 1.1 0.19"/>
+        <cylinder length="0.04" radius="0.04"/>
       </geometry>
     </collision>
     <visual name="LV__visual">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
-        <box size="0.18 1.1 0.19"/>
+        <cylinder length="0.04" radius="0.04"/>
       </geometry>
     </visual>
   </link>
-  <link name="LV__link_2_clone">
+  <link name="LV__link_1_clone">
     <inertial>
       <mass value="1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>
@@ -103,7 +99,7 @@
       </geometry>
     </visual>
   </link>
-  <link name="LV__link_2_clone_0">
+  <link name="LV__link_1_clone_0">
     <inertial>
       <mass value="1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>
@@ -122,26 +118,7 @@
       </geometry>
     </visual>
   </link>
-  <link name="LV__link_2_clone_0_clone">
-    <inertial>
-      <mass value="1"/>
-      <origin rpy="0  0  0" xyz="0  0  0"/>
-      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
-    </inertial>
-    <collision name="LV__collision">
-      <origin rpy="0  0  0" xyz="0  0  0"/>
-      <geometry>
-        <cylinder length="0.04" radius="0.04"/>
-      </geometry>
-    </collision>
-    <visual name="LV__visual">
-      <origin rpy="0  0  0" xyz="0  0  0"/>
-      <geometry>
-        <cylinder length="0.04" radius="0.04"/>
-      </geometry>
-    </visual>
-  </link>
-  <link name="LV__link_2_clone_1">
+  <link name="LV__link_1_clone_1">
     <inertial>
       <mass value="1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>

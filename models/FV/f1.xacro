@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
-<robot name="LV" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="FV" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find platooning_tracking_gazebo)/models/LV/model.gazebo" />
+  <xacro:include filename="$(find platooning_tracking_gazebo)/models/FV/f1.gazebo" />
 
   <joint name="chassis" type="fixed">
-    <parent link="LV__link_0"/>
-    <child link="LV__link_1"/>
+    <parent link="FV__link_0"/>
+    <child link="FV__link_1"/>
     <origin rpy="0  0  0" xyz="0      -0.19568  0.03714"/>
     <axis xyz="0  1  0"/>
     <!--limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/-->
@@ -13,32 +13,41 @@
   </joint>
 
   <!-- front  -->
-  <joint name="front_left" type="continuous">
-    <parent link="LV__link_0"/>
-    <child link="LV__link_2_clone_0_clone"/>
+  <joint name="f1_front_left" type="continuous">
+    <parent link="FV__link_0"/>
+    <child link="FV__link_2_clone_0_clone"/>
     <origin rpy="0      1.5707  0" xyz="-0.11     0.39431 -0.03785"/>
     <axis xyz="0   0   -1"/>
 	<limit effort="10.0" velocity="100.0"/>
   </joint>
-  <joint name="front_right" type="continuous">
-    <parent link="LV__link_0"/>
-    <child link="LV__link_2_clone"/>
+  <joint name="f1_front_right" type="continuous">
+    <parent link="FV__link_0"/>
+    <child link="FV__link_2_clone"/>
     <origin rpy="0      1.5707  0" xyz="0.11     0.39431 -0.03785"/>
 	<axis xyz="0   0   -1"/>
     <limit effort="10.0" velocity="100.0"/>
   </joint>
 
+  <!-- lidar -->
+  <joint name="lidar" type="revolute">
+    <parent link="FV__link_0"/>
+    <child link="laser"/>
+    <origin rpy="0  0  0" xyz="0       0.41413  0.08635"/>
+    <axis xyz="1  0  0"/>
+    <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+  </joint>
+
   <!-- rear -->
-  <joint name="rear_left" type="continuous">
-    <parent link="LV__link_1"/>
-    <child link="LV__link_2_clone_0"/>
+  <joint name="f1_rear_left" type="continuous">
+    <parent link="FV__link_1"/>
+    <child link="FV__link_2_clone_0"/>
     <origin rpy="0      1.5707  0" xyz="-0.11  -0.51  -0.075"/>
     <axis xyz="0   0   1"/>
     <limit effort="10.0" velocity="100.0"/>
   </joint>
-  <joint name="rear_right" type="continuous">
-    <parent link="LV__link_1"/>
-    <child link="LV__link_2_clone_1"/>
+  <joint name="f1_rear_right" type="continuous">
+    <parent link="FV__link_1"/>
+    <child link="FV__link_2_clone_1"/>
     <origin rpy="0      1.5707  0" xyz="0.11  -0.51  -0.075"/>
     <axis xyz="0   0   1"/>
     <limit effort="10.0" velocity="100.0"/>
@@ -46,124 +55,138 @@
 
 
 
-  <link name="LV__link_0">
+  <link name="FV__link_0">
     <inertial>
       <mass value="1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
-    <collision name="LV__collision">
+    <collision name="FV__collision">
       <origin rpy="0  0  0" xyz="0       0.40431  0.00714"/>
       <geometry>
         <box size="0.18 0.1 0.13"/>
       </geometry>
     </collision>
-    <visual name="LV__visual">
+    <visual name="FV__visual">
       <origin rpy="0  0  0" xyz="0       0.40431  0.00714"/>
       <geometry>
         <box size="0.18 0.1 0.13"/>
       </geometry>
     </visual>
   </link>
-  <link name="LV__link_1">
+  <link name="FV__link_1">
     <inertial>
       <mass value="1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
     </inertial>
-    <collision name="LV__collision">
+    <collision name="FV__collision">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <box size="0.18 1.1 0.19"/>
       </geometry>
     </collision>
-    <visual name="LV__visual">
+    <visual name="FV__visual">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <box size="0.18 1.1 0.19"/>
       </geometry>
     </visual>
   </link>
-  <link name="LV__link_2_clone">
+  <link name="FV__link_2_clone">
     <inertial>
       <mass value="1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
     </inertial>
-    <collision name="LV__collision">
+    <collision name="FV__collision">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <cylinder length="0.04" radius="0.04"/>
       </geometry>
     </collision>
-    <visual name="LV__visual">
+    <visual name="FV__visual">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <cylinder length="0.04" radius="0.04"/>
       </geometry>
     </visual>
   </link>
-  <link name="LV__link_2_clone_0">
+  <link name="FV__link_2_clone_0">
     <inertial>
       <mass value="1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
     </inertial>
-    <collision name="LV__collision">
+    <collision name="FV__collision">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <cylinder length="0.04" radius="0.04"/>
       </geometry>
     </collision>
-    <visual name="LV__visual">
+    <visual name="FV__visual">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <cylinder length="0.04" radius="0.04"/>
       </geometry>
     </visual>
   </link>
-  <link name="LV__link_2_clone_0_clone">
+  <link name="FV__link_2_clone_0_clone">
     <inertial>
       <mass value="1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
     </inertial>
-    <collision name="LV__collision">
+    <collision name="FV__collision">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <cylinder length="0.04" radius="0.04"/>
       </geometry>
     </collision>
-    <visual name="LV__visual">
+    <visual name="FV__visual">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <cylinder length="0.04" radius="0.04"/>
       </geometry>
     </visual>
   </link>
-  <link name="LV__link_2_clone_1">
+  <link name="FV__link_2_clone_1">
     <inertial>
       <mass value="1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
     </inertial>
-    <collision name="LV__collision">
+    <collision name="FV__collision">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <cylinder length="0.04" radius="0.04"/>
       </geometry>
     </collision>
-    <visual name="LV__visual">
+    <visual name="FV__visual">
       <origin rpy="0  0  0" xyz="0  0  0"/>
       <geometry>
         <cylinder length="0.04" radius="0.04"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="laser">
+    <inertial>
+      <mass value="0.1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+    <visual name="FV__visual">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://rrbot_description/meshes/hokuyo.dae" scale="1.0 1.0 1.0"/>
       </geometry>
     </visual>
   </link>
 
+
   <transmission name="tran1">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="front_left">
+    <joint name="f1_front_left">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor1">
@@ -174,7 +197,7 @@
 
   <transmission name="tran2">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="front_right">
+    <joint name="f1_front_right">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor2">
