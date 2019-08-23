@@ -20,6 +20,7 @@
     <axis xyz="0   0   -1"/>
 	<limit effort="10.0" velocity="100.0"/>
   </joint>
+
   <joint name="f1_front_right" type="continuous">
     <parent link="FV__link_0"/>
     <child link="FV__link_2_clone"/>
@@ -31,7 +32,7 @@
   <!-- lidar -->
   <joint name="lidar" type="revolute">
     <parent link="FV__link_0"/>
-    <child link="laser"/>
+    <child link="hokuyo"/>
     <origin rpy="0  0  0" xyz="0       0.41413  0.08635"/>
     <axis xyz="1  0  0"/>
     <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
@@ -45,6 +46,7 @@
     <axis xyz="0   0   1"/>
     <limit effort="10.0" velocity="100.0"/>
   </joint>
+
   <joint name="f1_rear_right" type="continuous">
     <parent link="FV__link_1"/>
     <child link="FV__link_2_clone_1"/>
@@ -169,7 +171,7 @@
       </geometry>
     </visual>
   </link>
-  <link name="laser">
+  <link name="hokuyo">
     <inertial>
       <mass value="0.1"/>
       <origin rpy="0  0  0" xyz="0  0  0"/>

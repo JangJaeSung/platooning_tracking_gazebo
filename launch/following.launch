@@ -16,7 +16,7 @@
   <!--node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find platooning_tracking_gazebo)/models/LV/model.urdf -urdf -z 1 -model model" /-->
 
   <!-- xacro -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/FV/model.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/FV/f1.xacro'" />
 
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -z 1 -model model -x 0 -y -1.8 -z 0.1" />
 

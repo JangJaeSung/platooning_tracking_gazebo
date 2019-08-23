@@ -10,6 +10,7 @@
   <!-- leader -->
   <group ns="leading_vehicle">
     <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/LV/model.xacro'" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -z 1 -model LV" />
   </group>
 
@@ -17,6 +18,8 @@
   <group ns="following_vehicle">
     <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/FV/f1.xacro'" />
     <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -y -1.8 -z 1 -model FV" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
+    <node type="rviz" name="rviz" pkg="rviz" />
   </group>
 
   <include file="$(find platooning_tracking_control)/launch/control.launch" />

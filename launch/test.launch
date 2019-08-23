@@ -23,10 +23,11 @@
   <!--node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find platooning_tracking_gazebo)/models/LV/model.urdf -urdf -z 1 -model model" /-->
 
   <!-- xacro -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/LV/model.xacro'" />
-  <!-- param name="use_gui" value="true" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/test/model.xacro'" />
 
-  <include file="$(find platooning_tracking_control)/launch/platooning_tracking_control.launch" />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -z 1 -model model" />
+
+  <include file="$(find platooning_tracking_control)/launch/test_lane_control.launch" />
 
 
 

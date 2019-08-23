@@ -11,7 +11,7 @@
   </gazebo>
 
   <!-- hukuyo -->
-  <gazebo reference="laser">
+  <gazebo reference="hokuyo">
     <!--material>Gazebo/Grey</material-->
     <sensor type="ray" name="hokuyo_sensor">
       <pose>0 0 0.0124 0 0 1.5707</pose>
@@ -38,7 +38,7 @@
       </ray>
       <plugin name="gazebo_ros_hokuyo_controller" filename="libgazebo_ros_laser.so">
         <topicName>/scan</topicName>
-        <frameName>laser</frameName>
+        <frameName>hokuyo</frameName>
       </plugin>
     </sensor>
   </gazebo>
