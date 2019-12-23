@@ -1,0 +1,322 @@
+<?xml version="1.0" ?>
+<robot name="FV" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find platooning_tracking_gazebo)/models/2_test/follower.gazebo" />
+
+  <joint name="chassis" type="fixed">
+    <parent link="FV__link_0"/>
+    <child link="FV__link_1"/>
+    <origin rpy="0  0  0" xyz="0      -0.19568  0.03714"/>
+  </joint>
+
+  <!-- front  -->
+  <joint name="FV_front_left" type="continuous">
+    <parent link="left_steering_hinge"/>
+    <child link="left_wheel"/>
+    <origin rpy="0      1.5707  0" xyz="-0.02   0   0"/>
+    <axis xyz="0   0   -1"/>
+	<limit effort="10.0" velocity="100.0"/>
+  </joint>
+  <joint name="FV_front_right" type="continuous">
+    <parent link="right_steering_hinge"/>
+    <child link="right_wheel"/>
+    <origin rpy="0      1.5707  0" xyz="0.02   0   0"/>
+	<axis xyz="0   0   -1"/>
+    <limit effort="10.0" velocity="100.0"/>
+  </joint>
+
+  <!-- hinge -->
+  <joint name="FV_left_steering_hinge_joint" type="revolute">
+    <parent link="FV__link_0"/>
+    <child link="left_steering_hinge"/>
+    <origin rpy="0    0    0" xyz="-0.10     0.39431 -0.03785"/>
+    <axis xyz="0   0   -1"/>
+	<limit lower="-1.0" upper="1.0" effort="10.0" velocity="100.0"/>
+  </joint>
+  <joint name="FV_right_steering_hinge_joint" type="continuous">
+    <parent link="FV__link_0"/>
+    <child link="right_steering_hinge"/>
+    <origin rpy="0    0    0" xyz="0.10     0.39431 -0.03785"/>
+	<axis xyz="0   0   -1"/>
+	<limit lower="-1.0" upper="1.0" effort="10.0" velocity="100.0"/>
+  </joint>
+
+  <!-- camera -->
+  <joint name="camera_joint" type="fixed">
+    <parent link="FV__link_0"/>
+    <child link="camera"/>
+    <origin rpy="0  0.1  1.5707" xyz="0  0.45  0.12"/>
+	<axis xyz="0   0   1"/>
+    <limit effort="-1.0" velocity="-1.0"/>
+  </joint>
+
+  <!-- lidar -->
+  <joint name="lidar" type="revolute">
+    <parent link="FV__link_0"/>
+    <child link="hokuyo"/>
+    <origin rpy="0  0  0" xyz="0       0.41413  0.08635"/>
+    <axis xyz="1  0  0"/>
+    <limit effort="-1.0" lower="-1.79769e+308" upper="1.79769e+308" velocity="-1.0"/>
+  </joint>
+
+
+ <!-- rear -->
+  <joint name="FV_rear_left" type="continuous">
+    <parent link="FV__link_1"/>
+    <child link="FV__link_2_clone_0"/>
+    <origin rpy="0      1.5707  0" xyz="-0.11  -0.51  -0.075"/>
+    <axis xyz="0   0   1"/>
+    <limit effort="10.0" velocity="100.0"/>
+  </joint>
+  <joint name="FV_rear_right" type="continuous">
+    <parent link="FV__link_1"/>
+    <child link="FV__link_2_clone_1"/>
+    <origin rpy="0      1.5707  0" xyz="0.11  -0.51  -0.075"/>
+    <axis xyz="0   0   1"/>
+    <limit effort="10.0" velocity="100.0"/>
+  </joint>
+
+
+
+  <link name="FV__link_0">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision name="FV__collision">
+      <origin rpy="0  0  0" xyz="0       0.40431  0.00714"/>
+      <geometry>
+        <box size="0.18 0.1 0.13"/>
+      </geometry>
+    </collision>
+    <visual name="FV__visual">
+      <origin rpy="0  0  0" xyz="0       0.40431  0.00714"/>
+      <geometry>
+        <box size="0.18 0.1 0.13"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="FV__link_1">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.166667" ixy="0" ixz="0" iyy="0.166667" iyz="0" izz="0.166667"/>
+    </inertial>
+    <collision name="FV__collision">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <box size="0.18 1.1 0.19"/>
+      </geometry>
+    </collision>
+    <visual name="FV__visual">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <box size="0.18 1.1 0.19"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_wheel">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+    </inertial>
+    <collision name="FV__collision">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.04"/>
+      </geometry>
+    </collision>
+    <visual name="FV__visual">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.04"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="FV__link_2_clone_0">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+    </inertial>
+    <collision name="FV__collision">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.04"/>
+      </geometry>
+    </collision>
+    <visual name="FV__visual">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.04"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="left_wheel">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+    </inertial>
+    <collision name="FV__collision">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.04"/>
+      </geometry>
+    </collision>
+    <visual name="FV__visual">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.04"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="FV__link_2_clone_1">
+    <inertial>
+      <mass value="1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+    </inertial>
+    <collision name="FV__collision">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.04"/>
+      </geometry>
+    </collision>
+    <visual name="FV__visual">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.04"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- hinge -->
+  <link name="left_steering_hinge">
+    <inertial>
+      <mass value="0.3"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+    </inertial>
+    <collision> 
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <sphere radius="0.020"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <sphere radius="0.020"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_steering_hinge">
+    <inertial>
+      <mass value="0.3"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0.145833" ixy="0" ixz="0" iyy="0.145833" iyz="0" izz="0.125"/>
+    </inertial>
+    <collision> 
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <sphere radius="0.020"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <sphere radius="0.020"/>
+      </geometry>
+    </visual>
+  </link>
+
+
+
+  <!-- camera -->
+  <link name="camera">
+    <inertial>
+      <mass value="0.02"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <visual>
+      <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+      </material>
+      <geometry>
+        <box size="0.02 0.02 0.02"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.02 0.02 0.02"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- lidar -->
+  <link name="hokuyo">
+    <inertial>
+      <mass value="0.1"/>
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+    <visual name="FV__visual">
+      <origin rpy="0  0  0" xyz="0  0  0"/>
+      <geometry>
+        <mesh filename="package://rrbot_description/meshes/hokuyo.dae" scale="1.0 1.0 1.0"/>
+      </geometry>
+    </visual>
+  </link>
+
+
+  <!-- velocity -->
+  <transmission name="tran1" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="FV_front_left">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran2" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="FV_front_right">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- steering -->
+  <transmission name="tran3" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="FV_left_steering_hinge_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran4" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="FV_right_steering_hinge_joint">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+</robot>

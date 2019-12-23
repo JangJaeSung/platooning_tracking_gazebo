@@ -23,11 +23,21 @@
   <!--node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-file $(find platooning_tracking_gazebo)/models/LV/model.urdf -urdf -z 1 -model model" /-->
 
   <!-- xacro -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/test/model.xacro'" />
+  <!-- leader -->
+  <group ns="leading_vehicle">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/2_test/leader.xacro'" />
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -y 2.4 -z 1 -model model" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
+  </group>
 
-  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -y 1.8 -z 1 -model model" />
-
-  <include file="$(find platooning_tracking_control)/launch/test_lane_control.launch" />
+  <!-- follower -->
+  <group ns="following_vehicle">
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find platooning_tracking_gazebo)/models/2_test/follower.xacro'" />
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -z 1 -model FV" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
+  </group>
+ 
+  <include file="$(find platooning_tracking_control)/launch/2_test_control.launch" />
 
 
 
